@@ -5,15 +5,13 @@
 Install this package via [Composer](https://getcomposer.org/).
 
 ```shell script
-$ composer require adata-team/laravel-clickhouse-migrations
+composer require adata-team/laravel-clickhouse-migrations
 ```
-
-> Note: **PHP 8.0.0 or later** is required
 
 Publish Clickhouse configs:
 
 ```shell script
-$ php artisan vendor:publish --provider='Adata\ClickhouseMigrations\Providers\MigrationProvider'
+php artisan vendor:publish --provider='Adata\ClickhouseMigrations\Providers\MigrationProvider'
 ```
 
 ## Basic Usage
@@ -21,19 +19,19 @@ $ php artisan vendor:publish --provider='Adata\ClickhouseMigrations\Providers\Mi
 Create a new migration file:
 
 ```shell script
-$ php artisan make:clickhouse-migration {name}
+php artisan make:clickhouse-migration {name}
 ```
 
 Up migrations:
 
 ```shell script
-$ php artisan clickhouse-migrate
+php artisan clickhouse-migrate
 ```
 
 Down last migration:
 
 ```shell script
-$ php artisan clickhouse-migration:rollback
+php artisan clickhouse-migration:rollback
 ```
 
 ## Advanced Usage
@@ -43,13 +41,13 @@ $ php artisan clickhouse-migration:rollback
 To create a new migration, use this command:
 
 ```shell script
-$ php artisan make:clickhouse-migration {name}
+php artisan make:clickhouse-migration {name}
 ```
 
 For example:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table
+php artisan make:clickhouse-migration create_users_table
 ```
 
 The new file will be located at the path specified in the configs: **clickhouse.path**
@@ -60,7 +58,16 @@ You can use a more prepared stub from the library that contains a template for
 quickly adding a new table by adding the **--table** option:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --table=users
+php artisan make:clickhouse-migration create_users_table --table=users
+```
+
+#### Dictionary
+
+You can use a more prepared stub from the library that contains a template for
+quickly adding a new table by adding the **--table** option:
+
+```shell script
+php artisan make:clickhouse-migration create_users_dictionary --dictionary=users
 ```
 
 #### Path
@@ -68,13 +75,13 @@ $ php artisan make:clickhouse-migration create_users_table --table=users
 You can override the path to the migrations folder by passing the **--path** option:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --path=database/new-migrations-folder
+php artisan make:clickhouse-migration create_users_table --path=database/new-migrations-folder
 ```
 
 If you want to use an absolute path to the file, add one more option - **--realpath** to the existing option:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --path=/path/to/migrations --realpath
+php artisan make:clickhouse-migration create_users_table --path=/path/to/migrations --realpath
 ```
 
 #### Stub
@@ -84,13 +91,13 @@ You can use your (override) prepared stub when creating a new file, list: **clic
 For example:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --stub=default
+php artisan make:clickhouse-migration create_users_table --stub=default
 ```
 
 Also you can add **Handlers**, with them, you can customize over one stub every time you create a file:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --stub=myStub --stub.handler='App\Clickhouse\MyHandler'
+php artisan make:clickhouse-migration create_users_table --stub=myStub --stub.handler='App\Clickhouse\MyHandler'
 ```
 
 > The class must implement the `Adata\ClickhouseMigrations\Contracts\MigrationStubHandlerContract` interface
@@ -98,7 +105,7 @@ $ php artisan make:clickhouse-migration create_users_table --stub=myStub --stub.
 You can pass your `$parameters`, for example:
 
 ```shell script
-$ php artisan make:clickhouse-migration create_users_table --stub.handler='App\Clickhouse\MyHandler' --stub.param=key:value --stub.param=table:products
+php artisan make:clickhouse-migration create_users_table --stub.handler='App\Clickhouse\MyHandler' --stub.param=key:value --stub.param=table:products
 ```
 
 You can also register a global handler that will apply to all generated stub files: `clickhouse.handlers.global`
@@ -112,7 +119,7 @@ You can also register a global handler that will apply to all generated stub fil
 To remove the interactive question during production migrations, you can use **--force** option:
 
 ```shell script
-$ php artisan clickhouse-migrate --force
+php artisan clickhouse-migrate --force
 ```
 
 #### Output
@@ -120,14 +127,14 @@ $ php artisan clickhouse-migrate --force
 To output migrations to be applied use **--output** option:
 
 ```shell script
-$ php artisan clickhouse-migrate --output
+php artisan clickhouse-migrate --output
 ```
 
 Before applying the shown migrations - will display an interactive question, to remove it,
 you can add another **--force** option to this option:
 
 ```shell script
-$ php artisan clickhouse-migrate --output --force
+php artisan clickhouse-migrate --output --force
 ```
 
 #### Step
@@ -135,7 +142,7 @@ $ php artisan clickhouse-migrate --output --force
 You can specify how many files need to be applied:
 
 ```shell script
-$ php artisan clickhouse-migrate --step=1
+php artisan clickhouse-migrate --step=1
 ```
 
 > Value `0` - all files
@@ -152,10 +159,6 @@ You can use a singleton object [smi2/phpClickHouse](https://github.com/smi2/phpC
 app('clickhouse')->select(/* Query */);
 app('clickhouse')->write(/* Query */);
 ```
-
-## Changelog
-
-Detailed changes for each release are documented in the [CHANGELOG.md](https://github.com/Alexeykhr/laravel-clickhouse-migrations/blob/master/CHANGELOG.md).
 
 ## License
 

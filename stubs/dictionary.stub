@@ -1,0 +1,46 @@
+<?php
+
+use Adata\ClickhouseMigrations\ClickhouseMigration;
+
+class {{ class }} extends ClickhouseMigration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up(): void
+    {
+        $db = $this->getDatabaseName();
+
+        $this->client->write("
+            CREATE DICTIONARY IF NOT EXISTS {$db}.{{ dictionary }} (
+                //
+            )
+            PRIMARY KEY id
+            SOURCE(
+                POSTGRESQL(
+                    port 5432
+                    host 'localhost'
+                    user  'postgres'
+                    password 'postgres'
+                    db 'db'
+                    table 'public.some_table'
+            ))
+            LIFETIME(MIN 1 MAX 60)
+            LAYOUT(HASHED());
+        ");
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down(): void
+    {
+        $db = $this->getDatabaseName();
+
+        $this->client->write("DROP DICTIONARY IF EXISTS {$db}.{{ dictionary }}");
+    }
+}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Adata\ClickhouseMigrations\Concerns;
 
+use Adata\ClickhouseMigrations\Stubs\Handlers\DictionaryStubHandler;
 use Adata\ClickhouseMigrations\Stubs\Handlers\TableStubHandler;
 use Adata\ClickhouseMigrations\Contracts\MigrationStubHandlerContract;
 
@@ -30,6 +31,8 @@ trait MigrationStubHandler
 
         if ($this->hasOption('table') && $this->option('table')) {
             $classes[] = TableStubHandler::class;
+        } else if ($this->hasOption('dictionary') && $this->option('dictionary')) {
+            $classes[] = DictionaryStubHandler::class;
         }
 
         return $this->makeHandlers($classes);
