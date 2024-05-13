@@ -32,6 +32,7 @@ class FactoryStub
         return array_merge([
             'default' => $prefix.'/default.stub',
             'table' => $prefix.'/table.stub',
+            'dictionary' => $prefix.'/dictionary.stub',
         ], self::getCustomStubs());
     }
 

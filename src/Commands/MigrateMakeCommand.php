@@ -25,6 +25,7 @@ class MigrateMakeCommand extends Command
                 {--stub.param=* : Parameter data for stub Handlers in key:value format}
                 {--stub.handler=* : Use additional handlers for Stub file}
                 {--table= : The table to migrate}
+                {--dictionary= : The dictionary to migrate}
                 {--path= : Path to Clickhouse directory with migrations}
                 {--realpath : Indicate any provided file paths are pre-resolved absolute paths}';
 
@@ -74,6 +75,10 @@ class MigrateMakeCommand extends Command
             return FactoryStub::make('table');
         }
 
+        if ($this->getDictionaryOption()) {
+            return FactoryStub::make('dictionary');
+        }
+
         return FactoryStub::make();
     }
 
@@ -91,6 +96,18 @@ class MigrateMakeCommand extends Command
     protected function getTableOption(): ?string
     {
         if ($table = $this->option('table')) {
+            return trim($table);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getDictionaryOption(): ?string
+    {
+        if ($table = $this->option('dictionary')) {
             return trim($table);
         }
 
@@ -117,6 +134,8 @@ class MigrateMakeCommand extends Command
 
         if ($table = $this->getTableOption()) {
             $parameters['table'] = $table;
+        } else if ($dict = $this->getDictionaryOption()) {
+            $parameters['dictionary'] = $dict;
         }
 
         return $parameters;
