@@ -33,7 +33,7 @@ class MigrationRepository
      */
     public function create(): Statement
     {
-        if (config('clickhouse.config.options.cluster.enabled')) {
+        if (config('clickhouse.config.cluster.enabled')) {
             return $this->client->write("
             CREATE TABLE IF NOT EXISTS {db}.{table} ON CLUSTER {cluster}
             (
