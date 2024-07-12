@@ -6,6 +6,7 @@ namespace Adata\ClickhouseMigrations\Migrations;
 
 use ClickHouseDB\Client;
 use ClickHouseDB\Statement;
+use Illuminate\Support\Str;
 
 class MigrationRepository
 {
@@ -32,6 +33,27 @@ class MigrationRepository
      */
     public function create(): Statement
     {
+        if (config('clickhouse.config.options.cluster.enabled')) {
+            return $this->client->write("
+            CREATE TABLE IF NOT EXISTS {db}.{table} ON CLUSTER {cluster}
+            (
+                migration String,
+                batch UInt32,
+                applied_at DateTime DEFAULT NOW()
+            )
+            ENGINE = ReplicatedReplacingMergeTree('{zookeeper_path}/{shard}/{db}/{table}_{hash}', '{replica}')
+            ORDER BY migration
+        ", [
+                'table' => $this->table,
+                'hash' => md5(Str::random(8)),
+                'shard' => config('clickhouse.config.options.cluster.shard'),
+                'replica' => config('clickhouse.config.options.cluster.replica'),
+                'zookeeper_path' => config('clickhouse.config.options.cluster.zookeeper_path'),
+                'db' => config('clickhouse.config.options.database'),
+                'cluster' => config('clickhouse.config.options.cluster.name'),
+            ]);
+        }
+
         return $this->client->write('
             CREATE TABLE IF NOT EXISTS {table} (
                 migration String,
