@@ -17,15 +17,15 @@ return [
         'port' => env('CLICKHOUSE_PORT', 8123),
         'username' => env('CLICKHOUSE_USER', 'default'),
         'password' => env('CLICKHOUSE_PASSWORD', ''),
+        'cluster' => [
+            'enabled' => env('CLICKHOUSE_CLUSTER_ENABLED', false),
+            'name' => env('CLICKHOUSE_CLUSTER_NAME', 'default'),
+            'zookeeper_path' => env('CLICKHOUSE_CLUSTER_ZOOKEEPER_PATH', '/clickhouse/tables'),
+            'shard' => env('CLICKHOUSE_CLUSTER_SHARD', '{shard}'),
+            'replica' => env('CLICKHOUSE_CLUSTER_REPLICA', '{replica}'),
+        ],
         'options' => [
             'database' => env('CLICKHOUSE_DATABASE', 'default'),
-            'cluster' => [
-                'enabled' => env('CLICKHOUSE_CLUSTER_ENABLED', false),
-                'name' => env('CLICKHOUSE_CLUSTER_NAME', 'default'),
-                'zookeeper_path' => env('CLICKHOUSE_CLUSTER_ZOOKEEPER_PATH', '/clickhouse/tables'),
-                'shard' => env('CLICKHOUSE_CLUSTER_SHARD', '{shard}'),
-                'replica' => env('CLICKHOUSE_CLUSTER_REPLICA', '{replica}'),
-            ],
             'timeout' => 1,
             'connectTimeOut' => 2,
         ],

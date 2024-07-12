@@ -46,11 +46,11 @@ class MigrationRepository
         ", [
                 'table' => $this->table,
                 'hash' => md5(Str::random(8)),
-                'shard' => config('clickhouse.config.options.cluster.shard'),
-                'replica' => config('clickhouse.config.options.cluster.replica'),
-                'zookeeper_path' => config('clickhouse.config.options.cluster.zookeeper_path'),
+                'shard' => config('clickhouse.config.cluster.shard'),
+                'replica' => config('clickhouse.config.cluster.replica'),
+                'zookeeper_path' => config('clickhouse.config.cluster.zookeeper_path'),
                 'db' => config('clickhouse.config.options.database'),
-                'cluster' => config('clickhouse.config.options.cluster.name'),
+                'cluster' => config('clickhouse.config.cluster.name'),
             ]);
         }
 
